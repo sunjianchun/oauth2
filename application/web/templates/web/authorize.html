@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% load web_extras %}
+
+{% block content %}
+    <div class="jumbotron">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <p class="lead">客户端 <b>{{ client.client_id }}</b> 将要获得您以下权限</p>
+
+            <div class="row">
+                {% for scope in scopes %}
+                    <div class="col-md-4">
+                        <p>
+                            <b><input type="checkbox" name="{{ form.scopes.name }}" value="{{ scope.pk }}"
+                                      checked> {{ scope.scope }}</b>
+                            <br>
+                            <small>{{ scope.description }}</small>
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+            <p class="lead"><font color="#ff8c00">{{ emg }}</font></p>
+            <div class="row">
+                <table style="margin-left: 60px;">
+                    <tbody>
+                    <tr>
+                        <td>{{ form.email.label_tag }}&nbsp</td>
+                        <td>{{ form.email }}</td>
+                        <td>&nbsp{{ form.password.label_tag }}&nbsp</td>
+                        <td>{{ form.password }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-lg btn-block btn-success"
+                            name="{{ form.authorize.name }}"
+                            value="1">登录并授权
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-lg btn-block btn-danger"
+                            name="{{ form.authorize.name }}"
+                            value="0">禁止
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
