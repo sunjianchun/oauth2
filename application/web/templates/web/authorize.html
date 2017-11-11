@@ -6,19 +6,19 @@
             {% csrf_token %}
 
             <p class="lead">客户端 <b>{{ client.client_id }}</b> 将要获得您以下权限</p>
-
+            <br>
             <div class="row">
                 {% for scope in form.scopes.field.queryset %}
                     <div class="col-md-4">
                         <p>
-                            <b><input type="checkbox" name="{{ form.scopes.name }}" value="{{ scope.pk }}"
-                                      checked> {{ scope.scope }}</b>
+                            <input type="checkbox" name="{{ form.scopes.name }}" value="{{ scope.pk }}"
+                                      checked> <font size="small"> {{ scope.description }}</font>
                             <br>
-                            <small>{{ scope.description }}</small>
                         </p>
                     </div>
                 {% endfor %}
             </div>
+            <br>
             <p class="lead"><font color="#ff8c00">{{ emg }}</font></p>
             <div class="row">
                 <table style="margin-left: 60px;">
