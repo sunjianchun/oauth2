@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'oauth2',
-        'PASSWORD': 'ChunXiao@&150426',
+        'PASSWORD': '123456',
         'PORT': '3306',
         'USER': 'oauth2',
         'HOST': '127.0.0.1',
