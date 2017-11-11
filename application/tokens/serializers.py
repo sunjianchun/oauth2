@@ -10,4 +10,4 @@ class OAuthAccessTokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OAuthAccessToken
-        fields = ('id', 'access_token', 'expire_in', 'token_type', 'scope', 'refresh_token')
+        fields = ('access_token', 'expire_in', 'token_type', 'scope', 'refresh_token')

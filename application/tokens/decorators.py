@@ -125,11 +125,11 @@ def validate_request(func):
             else:
                 scopes = scopes.strip().split(',')
                 scopes = OAuthScope.objects.filter(scope__in=scopes)
-                if settings.APPEND_DEFAULT_SCOPES:
-                    default_scopes = OAuthScope.objects.filter(is_default=True)
-                    request.scopes = list(set(scopes) | set(default_scopes))
-                else:
-                    request.scopes = scopes
+            if settings.APPEND_DEFAULT_SCOPES:
+                default_scopes = OAuthScope.objects.filter(is_default=True)
+                request.scopes = list(set(scopes) | set(default_scopes))
+            else:
+                request.scopes = scopes
 
         if grant_type == settings.REFRESH:
             refresh_token = request.POST.get('refresh_token', None)
@@ -148,11 +148,10 @@ def validate_request(func):
                 scopes = request.GET.get('scopes', None)
             if not scopes:
                 request.scopes = request.refresh_token.access_token.scopes.all()
-
-            scopes = scopes.strip().split(',')
-            scopes = OAuthScope.objects.filter(scope__in=scopes)
-
-            request.scopes = list(set(scopes) & set(request.refresh_token.access_token.scopes.all()))
+            else:
+                scopes = scopes.strip().split(',')
+                scopes = OAuthScope.objects.filter(scope__in=scopes)
+                request.scopes = list(set(scopes) & set(request.refresh_token.access_token.scopes.all()))
 
         request.grant_type = grant_type
 

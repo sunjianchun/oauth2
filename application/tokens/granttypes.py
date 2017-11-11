@@ -79,7 +79,7 @@ class RefreshTokenGrantTypeAccessToken(CreateTokenMixin):
         self.user = self.refresh_token.access_token.user
         self.client = self.refresh_token.access_token.client
         self.access_token = self.refresh_token.access_token
-        self.scopes = self.refresh_token.access_token.scopes.all()
+        self.scopes = request.scopes
 
         if self.refresh_token.check_expire():
             self.refresh_token.delete()

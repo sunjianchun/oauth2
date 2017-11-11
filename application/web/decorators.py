@@ -59,11 +59,11 @@ def validate_request(view):
             else:
                 scopes = scopes.strip().split(',')
                 scopes = OAuthScope.objects.filter(scope__in=scopes)
-                if settings.APPEND_DEFAULT_SCOPES:
-                    default_scopes = OAuthScope.objects.filter(is_default=True)
-                    request.scopes = list(set(default_scopes) | set(scopes))
-                else:
-                    request.scopes = scopes
+            if settings.APPEND_DEFAULT_SCOPES:
+                default_scopes = OAuthScope.objects.filter(is_default=True)
+                request.scopes = list(set(default_scopes) | set(scopes))
+            else:
+                request.scopes = scopes
 
         try:
             request.client = OAuthClient.objects.get(client_id=client_id)
