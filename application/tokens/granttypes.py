@@ -3,6 +3,7 @@ from django.conf import settings
 from application.tokens.models import *
 from oauth2.exceptions import *
 
+
 def factory(request):
     if request.grant_type == settings.AUTHORIZATION_CODE:
         return AuthorizationGrantTypeAccessToken(request)
@@ -31,15 +32,20 @@ class CreateTokenMixin(object):
         access_token.scopes.add(*self.scopes)
         return access_token
 
+
 class AuthorizationGrantTypeAccessToken(CreateTokenMixin):
     def __init__(self, request):
         self.scopes = request.auth_code.scopes.all()
         self.user = request.auth_code.user
+
+        print type(request.client)
         self.client = request.client
+        print type(self.client)
         self.auth_code = request.auth_code
         if self.auth_code.check_expire():
             self.auth_code.delete()
             raise ExpiredAuthorizationCodeException()
+
     def grant(self):
         access_token = self.create_assess_token()
         self.auth_code.delete()
@@ -49,11 +55,12 @@ class AuthorizationGrantTypeAccessToken(CreateTokenMixin):
 class PasswordGrantTypeAccessToken(CreateTokenMixin):
     def __init__(self, request):
         self.user = request.user
-        self.client = request.client,
+        self.client = request.client
         self.scopes = request.scopes
 
-        def grant(self):
-            return self.create_assess_token()
+    def grant(self):
+        return self.create_assess_token()
+
 
 class CredentialsGrantTypeAccessToken(CreateTokenMixin):
     def __init__(self, request):
@@ -69,17 +76,18 @@ class RefreshTokenGrantTypeAccessToken(CreateTokenMixin):
     def __init__(self, request):
         self.refresh_token = request.refresh_token
 
-        self.user = self.refresh_token.user
-        self.client = self.refresh_token.client
+        self.user = self.refresh_token.access_token.user
+        self.client = self.refresh_token.access_token.client
         self.access_token = self.refresh_token.access_token
         self.scopes = self.refresh_token.access_token.scopes.all()
 
         if self.refresh_token.check_expire():
             self.refresh_token.delete()
+            self.access_token.delete()
             raise ExpiredRefreshTokenException()
 
-        def grant(self):
-            access_token = self.create_assess_token()
-            self.refresh_token.access_token.delete()
-            self.refresh_token.delete()
-            return  access_token
+    def grant(self):
+        access_token = self.create_assess_token()
+        self.refresh_token.access_token.delete()
+        self.refresh_token.delete()
+        return access_token

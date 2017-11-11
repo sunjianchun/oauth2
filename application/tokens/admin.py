@@ -6,6 +6,10 @@ class OAuthScopeAdmin(admin.ModelAdmin):
     search_field = ('scope',)
 
 
+class OAuthScopeTypeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_field = ('name', 'code',)
+
 class OAuthAccessTokenAdmin(admin.ModelAdmin):
     list_display = ('client', 'user', 'access_token', 'refresh_token', 'expire_at')
     search_field = ('access_token', 'client',)

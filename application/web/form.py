@@ -4,7 +4,7 @@ from application.tokens.models import OAuthScope
 
 
 class AuthorizeForm(forms.Form):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super(AuthorizeForm, self).__init__(*args, **kwargs)
         self.fields['email'] = forms.CharField(
             label=u'用户名/邮箱',
@@ -18,6 +18,7 @@ class AuthorizeForm(forms.Form):
         )
         self.fields['authorize'] = forms.BooleanField()
         self.fields['scopes'] = forms.ModelMultipleChoiceField(
-            queryset=OAuthScope.objects.all(),
+            queryset=request.scopes,
             widget=forms.CheckboxSelectMultiple,
+            required=False,
         )

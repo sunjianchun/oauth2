@@ -1,4 +1,5 @@
-from __future__ import unicode_literals
+#encoding: utf-8
+# from __future__ import unicode_literals
 
 from django.db import models
 from django.core.validators import EmailValidator, ValidationError
@@ -22,6 +23,20 @@ class OAuthCredentials(models.Model):
         return pwd_context.verify(secret=raw_password, hash=self.password)
 
 class OAuthUser(OAuthCredentials):
+    MAN = 0
+    FEMAN = 1
+    OTHER = 2
+
+    CHOICES = (
+        (MAN, u"男"),
+        (FEMAN, u"女"),
+        (OTHER, u'其他'),
+    )
+
+    phone = models.CharField(max_length=11, null=True)
+    sex = models.IntegerField(choices=CHOICES, default=MAN)
+    address = models.CharField(max_length=255, null=True)
+    idCard = models.CharField(max_length=255, null=True)
     email = models.CharField(
         max_length=254,
         unique=True,

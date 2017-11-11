@@ -12,8 +12,7 @@ class ExpireMixin(models.Model):
         abstract = True
 
     def check_expire(self):
-#        return timezone.now() > self.expire_at
-        return False
+        return timezone.now() > self.expire_at
     @property
     def expire_in(self):
         now = timezone.now()
@@ -89,4 +88,4 @@ class OAuthAuthorizationCode(TokenCodeMixin, ExpireMixin):
         return self.code
 
     lifetime_setting = 'AUTH_CODE_LIFETIME'
-    default_lifetime = 3600
+    default_lifetime = 7200

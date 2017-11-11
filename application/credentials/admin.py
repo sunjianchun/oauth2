@@ -7,7 +7,7 @@ class OAuthClientAdmin(admin.ModelAdmin):
 
 
 class OAuthUserAdmin(admin.ModelAdmin):
-    list_display = ('email',)
+    list_display = ('email', 'phone', 'idCard')
     search_field = ('email',)
 
 

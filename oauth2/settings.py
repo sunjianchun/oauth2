@@ -146,3 +146,12 @@ VALID_GRANT_TYPES = (
     REFRESH,
     CLIENT,
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'EXCEPTION_HANDLER': 'oauth2.exceptions.custom_exception_handler',
+}
+
+APPEND_DEFAULT_SCOPES = True

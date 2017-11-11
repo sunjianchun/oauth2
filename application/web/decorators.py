@@ -1,6 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from application.tokens.models import OAuthScope
 from application.credentials.models import OAuthClient
+from django.conf import settings
 
 
 def validate_request(view):
@@ -45,6 +47,28 @@ def validate_request(view):
                 return _err_response(request, u'invalid_request', u'The state parameter is required')
 
         request.state = state
+
+        if request.method == "POST":
+            scopes = request.POST.getlist('scopes', None)
+            request.scopes = OAuthScope.objects.filter(pk__in=scopes)
+
+        else:
+            scopes = request.GET.get('scopes', None)
+            if not scopes:
+                scopes = []
+            else:
+                scopes = scopes.strip().split(',')
+                scopes = OAuthScope.objects.filter(scope__in=scopes)
+                if settings.APPEND_DEFAULT_SCOPES:
+                    default_scopes = OAuthScope.objects.filter(is_default=True)
+                    request.scopes = list(set(default_scopes) | set(scopes))
+                else:
+                    request.scopes = scopes
+
+        try:
+            request.client = OAuthClient.objects.get(client_id=client_id)
+        except OAuthClient.DoesNotExist:
+            return _err_response(request, u'invalid_client', u'The client id supplied is invalid')
 
         return view(request, *args, **kwargs)
 

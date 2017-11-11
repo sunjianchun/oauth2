@@ -9,7 +9,6 @@ from application.tokens.models import OAuthScope
 from application.credentials.models import OAuthUser
 
 from responsetypes import factory
-from django.core.urlresolvers import reverse_lazy
 
 
 class AuthorizeView(View):
@@ -22,7 +21,7 @@ class AuthorizeView(View):
         return super(AuthorizeView, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()
+        form = self.form_class(request)
         return self._render(request, form, u"")
 
     def _render(self, request, form, emg):
@@ -35,7 +34,7 @@ class AuthorizeView(View):
         }))
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request, request.POST)
 
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -61,3 +60,4 @@ class AuthorizeView(View):
             )
         else:
             return self._render(request, form, u"form表单填写不正确")
+
