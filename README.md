@@ -9,6 +9,7 @@
 
 2：用户授权后携带code去申请accesss_token(简化模式可以直接获得access_token)<br/>
 http请求<br/>
+
 ![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/code1.jpeg)<br/>
 2：curl 模拟访问<br/>
 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_code&client_id=test@test.com&client_secret=123456&state=state&code=7fc9e8dc-0d71-4044-92fd-a747b78f30c5"<br/>
@@ -24,6 +25,9 @@ curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_c
 
 二：password模式<br/>
 1：http请求<br/>
+
+
+
 ![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/pass.jpeg)<br/>
 2：curl 请求 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=password&client_id=test@test.com&client_secret=123456&state=state&username=user@test.com&password=123456"<br/>
 
@@ -52,6 +56,7 @@ curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_c
 
 四：客户端模式<br/>
 1：http请求<br/>
+
 ![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/client.jpeg)<br/>
 2：curl 请求 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=client_credentials&client_id=test@test.com&client_secret=123456&state=state"<br/>
 
