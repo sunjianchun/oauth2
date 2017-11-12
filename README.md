@@ -5,10 +5,11 @@
 1：http请求<br/>
 ![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/code.jpeg)<br/>
 测试用例：浏览器访问：http://127.0.0.1:9090/web/authorize/?response_type=token&client_id=family&redirect_uri=http://127.0.0.1:8888/oauth2/showcode&state=somestate&scopes=email,id/idCard,address/sex <br/>
-
+![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/web.png)<br/>
 
 2：用户授权后携带code去申请accesss_token(简化模式可以直接获得access_token)<br/>
 http请求<br/>
+![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/code1.jpeg)<br/>
 2：curl 模拟访问<br/>
 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_code&client_id=test@test.com&client_secret=123456&state=state&code=7fc9e8dc-0d71-4044-92fd-a747b78f30c5"<br/>
 
@@ -23,9 +24,7 @@ curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_c
 
 二：password模式<br/>
 1：http请求<br/>
-
-
-
+![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/pass.jpeg)<br/>
 2：curl 请求 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=password&client_id=test@test.com&client_secret=123456&state=state&username=user@test.com&password=123456"<br/>
 
 {<br/>
@@ -39,7 +38,7 @@ curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_c
 三：refresh_token的grant_type<br/>
 1：http请求<br/>
 
-
+![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/refresh_token.jpeg)<br/>
 
 2：curl 请求 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=refresh_token&client_id=test@test.com&client_secret=123456&state=state&refresh_token=2a7bbf77-f1ee-42fc-b930-c4314740d19d"<br/>
 
@@ -53,7 +52,7 @@ curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=authorization_c
 
 四：客户端模式<br/>
 1：http请求<br/>
-
+![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/client.jpeg)<br/>
 2：curl 请求 curl -XPOST 'http://127.0.0.1:9090/api/v1/tokens' -d "grant_type=client_credentials&client_id=test@test.com&client_secret=123456&state=state"<br/>
 
 {<br/>
