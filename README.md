@@ -1,7 +1,7 @@
 # oauth2
 
 
-一：授权码模式、简化模式
+一：授权码模式、简化模式<br/>
 1：http请求
 ![image](https://github.com/sunjianchun/oauth2/blob/master/md/image/code.jpeg)
 参数及方法内容是否必须方法GET是response_typecode/token是client_idtest@test.com是client_secret123456是redirect_urihttp://127.0.0.1:8888/oauth2/showcode是scopesemail,id/idCard （多个权限以，号分割）否statesomestate是
